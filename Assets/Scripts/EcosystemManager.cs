@@ -38,7 +38,7 @@ public class EcosystemManager : MonoBehaviour
     [SerializeField] private GameObject _preyParentObject;
     [SerializeField] private GameObject _predatorParentObject;
     [SerializeField] private GameObject _ground;
-    //[SerializeField] private GameObject _water;
+    [SerializeField] private GameObject _water;
     #endregion
 
 
@@ -157,5 +157,6 @@ public class EcosystemManager : MonoBehaviour
     public GameObject PredatorPrefab       => _predatorPrefab;
     public GameObject PreyParentObject     => _preyParentObject;
     public GameObject PredatorparentObject => _predatorParentObject;
+    public GameObject Water                => _water;
     #endregion
 }

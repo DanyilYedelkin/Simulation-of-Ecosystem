@@ -29,9 +29,11 @@ namespace Animals
         [SerializeField] private EcosystemManager _ecosystemManager;
         #endregion
 
+
         #region Private Members
         private NavMeshAgent _agent;
         #endregion
+
 
         #region Unity Methods
         public void OnValidate()
@@ -49,12 +51,13 @@ namespace Animals
         }
         #endregion
 
+
         #region API
         public void DeathIsInevitable()
         {
-            /*if (_lifeSpan > 0)
+            /*if (_healthPoints > 0)
             {
-                _lifeSpan -= Time.fixedDeltaTime;
+                _healthPoints -= Time.fixedDeltaTime;
             }
             else
             {
@@ -72,7 +75,39 @@ namespace Animals
         {
             throw new NotImplementedException();
         }
+
+        public void ThirstLogic()
+        {
+            if (CurrentState == AnimalState.Drinking)
+            {
+                return;
+            }
+
+            if (Agent.velocity.magnitude > 0.2f)
+            {
+                Thirst -= (0.05f * IdleSpeed) * Time.fixedDeltaTime;
+            }
+            else
+            {
+                Thirst -= (0.05f * Time.fixedDeltaTime);
+            }
+
+            if (Thirst <= 0)
+            {
+                RemoveAnimalFromManager();
+                Destroy(gameObject);
+            }
+        }
+
+        /*public void WaterLogic()
+        {
+            if (Thirst <= 50)
+            {
+
+            }
+        }*/
         #endregion
+
 
         #region Local Methods
         private void HandleInputs()
@@ -90,6 +125,7 @@ namespace Animals
             _age = Mathf.Clamp(_age, 0f, 30f);
         }
         #endregion
+        
 
         #region Properties
         public EcosystemManager EcosystemManager => _ecosystemManager;

@@ -35,6 +35,11 @@ namespace Animals.Prey
                 {
                     _preyController.FoodWasSeen(hitCollider.gameObject);
                 }
+
+                if (hitCollider.gameObject.tag.Equals("Water"))
+                {
+                    _preyController.WaterWasSeen(hitCollider.gameObject);
+                }
             }
 
             if (_predatorsInRadius > 0)

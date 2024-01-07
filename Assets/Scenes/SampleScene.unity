@@ -831,9 +831,10 @@ GameObject:
   - component: {fileID: 1562080802}
   - component: {fileID: 1562080801}
   - component: {fileID: 1562080800}
+  - component: {fileID: 1562080803}
   m_Layer: 4
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -925,6 +926,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562080798}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &1562080803
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562080798}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.0326357, y: 5.587743, z: 5.9625735}
+  m_Center: {x: -1.9836779, y: 0.79387164, z: 2.0187309}
 --- !u!1001 &8501277332793441388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -943,7 +965,7 @@ PrefabInstance:
       objectReference: {fileID: 1340943980}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _preyCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _predatorCount

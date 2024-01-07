@@ -198,6 +198,7 @@ MonoBehaviour:
   _thirst: 100
   _healthPoints: 100
   _age: 10
+  _sex: 0
   _ecosystemManager: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
 --- !u!114 &4553056459746178254
 MonoBehaviour:
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67550a371d87577468bd95d0618c0b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _reproductionTime: 5
+  _reproductionTime: 90
   _remainingTime: 5
   _animalBehaviour: {fileID: 4806527765874990635}
   _mutationController: {fileID: -3156159604700050615}
