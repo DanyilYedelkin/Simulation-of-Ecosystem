@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5940727739181083289}
   - component: {fileID: 3189638356800522051}
+  - component: {fileID: 1412963825450544031}
   m_Layer: 0
   m_Name: EcosystemManager
   m_TagString: EcosystemManager
@@ -94,6 +95,32 @@ MonoBehaviour:
   _preyParentObject: {fileID: 8972030040132359842}
   _predatorParentObject: {fileID: 2836659193329047758}
   _ground: {fileID: 0}
+  _water: {fileID: 0}
+--- !u!114 &1412963825450544031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670459492669818811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe0adc81daccfb499f914d77a3f9657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isPrey: 0
+  SpeedMutationType: 4
+  SpeedMutationProbability: 0
+  SpeedMutationValueMin: 0
+  SpeedMutationValueMax: 0
+  DominantSpeed: 0
+  RecessiveSpeed: 0
+  MetabolismMutationType: 4
+  MetabolismMutationProbability: 0
+  MetabolismMutationValueMin: 0
+  MetabolismMutationValueMax: 0
+  DominantMetabloism: 0
+  RecessiveMetabloism: 0
 --- !u!1 &8972030040132359842
 GameObject:
   m_ObjectHideFlags: 0

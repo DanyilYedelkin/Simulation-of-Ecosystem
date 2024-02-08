@@ -7,13 +7,14 @@ namespace Animals.Prey
     public class PreySearchRadius : SearchRadius
     {
         #region Configuration
-        [SerializeField] private int              _predatorsInRadius = 0;
-        [SerializeField] private List<GameObject> _predators;
-        [SerializeField] private PreyController   _preyController;
+        [SerializeField] private int                    _predatorsInRadius = 0;
+        [SerializeField] private List<GameObject>       _predators;
+        [SerializeField] private PreyController         _preyController;
+        [SerializeField] private ReproductionController _reproductionSystem;
         #endregion
 
         #region Private Members
-        private Collider[] _hitColliders;
+        private Collider[]                _hitColliders;
         #endregion
 
         #region Unity Methods
@@ -29,6 +30,11 @@ namespace Animals.Prey
                 {
                     _predatorsInRadius++;
                     _predators.Add(hitCollider.gameObject);
+                }
+
+                if (hitCollider.gameObject.tag.Equals("Prey"))
+                {
+                    _reproductionSystem.MateWasFound(hitCollider.gameObject);
                 }
 
                 if (hitCollider.gameObject.tag.Equals("Plant"))

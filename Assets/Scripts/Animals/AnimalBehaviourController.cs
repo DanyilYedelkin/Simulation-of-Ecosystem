@@ -14,15 +14,22 @@ namespace Animals
 
         [Space]
         [Header("General Animal Settings")]
-        [SerializeField] private float _idleSpeed    = 0f;
-        [SerializeField] private float _fleeingSpeed = 0f;
-        [SerializeField] private int   _litterCount  = 0;
-        [SerializeField] private float _hunger;
-        [SerializeField] private float _thirst;
-        [SerializeField] private float _healthPoints;
-        [SerializeField] private float _age;
+        [SerializeField] private float _idleSpeed        = 0f;
+        [SerializeField] private float _fleeingSpeed     = 0f;
+        [SerializeField] private float _hunger           = 0f;
+        [SerializeField] private float _thirst           = 0f;
+        [SerializeField] private float _reproductiveNeed = 0f;
+        [SerializeField] private float _healthPoints     = 100;
+        [SerializeField] private float _age              = 0;
         [Tooltip("true - male, false - female")]
-        [SerializeField] private bool  _sex;
+        [SerializeField] private bool  _sex              = false;
+        [SerializeField] private Gene  _gene;
+
+        [Space]
+        [Header("Gene configuration")]
+        [SerializeField] private Genotype _genotype;
+        [SerializeField] private int      _firstValue;
+        [SerializeField] private int      _secondValue;
 
         [Space]
         [Header("Ecosystem Manager")]
@@ -32,6 +39,7 @@ namespace Animals
 
         #region Private Members
         private NavMeshAgent _agent;
+        private GameObject   _mateAnimal;
         #endregion
 
 
@@ -42,12 +50,14 @@ namespace Animals
             HandleInputs();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _idleSpeed;
             _ecosystemManager = GameObject.FindGameObjectWithTag("EcosystemManager").GetComponent<EcosystemManager>();
             _sex = UnityEngine.Random.Range(0, 2) == 0 ? true : false;
+
+            GenerateGene();
         }
         #endregion
 
@@ -85,31 +95,53 @@ namespace Animals
 
             if (Agent.velocity.magnitude > 0.2f)
             {
-                Thirst -= (0.05f * IdleSpeed) * Time.fixedDeltaTime;
+                Thirst += (0.05f * IdleSpeed) * Time.fixedDeltaTime;
             }
             else
             {
-                Thirst -= (0.05f * Time.fixedDeltaTime);
+                Thirst += (0.05f * Time.fixedDeltaTime);
             }
 
-            if (Thirst <= 0)
+            if (Thirst >= 100)
             {
                 RemoveAnimalFromManager();
                 Destroy(gameObject);
             }
         }
 
-        /*public void WaterLogic()
+        public void ReproductionNeed()
         {
-            if (Thirst <= 50)
+            if (Agent.velocity.magnitude > 0.2f)
             {
-
+                ReproductiveNeed += (0.05f * IdleSpeed) * Time.fixedDeltaTime;
             }
-        }*/
+            else
+            {
+                ReproductiveNeed += (0.05f * Time.fixedDeltaTime);
+            }
+        }
         #endregion
 
 
         #region Local Methods
+        private void GenerateGene()
+        {
+            if (_gene == null)
+            {
+                _gene = new();
+                System.Random random = new System.Random();
+
+                _gene.GeneType = Genotype.Ab;
+                _gene.FirstGeneValue = random.Next(10, 21);
+                _gene.SecondGeneValue = random.Next(5, 13);
+                _gene.ParentType = _sex ? ParentType.Father : ParentType.Mother;
+            }
+
+            _firstValue = _gene.FirstGeneValue;
+            _secondValue = _gene.SecondGeneValue;
+            _genotype = _gene.GeneType;
+        }
+
         private void HandleInputs()
         {
             // handle hunger rate 
@@ -131,7 +163,6 @@ namespace Animals
         public EcosystemManager EcosystemManager => _ecosystemManager;
         public float            IdleSpeed        => _idleSpeed;
         public float            FleeingSpeed     => _fleeingSpeed;
-        public int              LitterCount      => _litterCount;
         public bool             Sex              => _sex;
         public AnimalState CurrentState
         {
@@ -153,10 +184,25 @@ namespace Animals
             get => _thirst;
             set => _thirst = value;
         }
+        public float ReproductiveNeed
+        {
+            get => _reproductiveNeed;
+            set => _reproductiveNeed = value;
+        }
         public float Age
         {
             get => _age;
             set => _age = value;
+        }
+        public Gene Gene
+        {
+            get => _gene;
+            set => _gene = value;
+        }
+        public GameObject MateAnimal
+        {
+            get => _mateAnimal;
+            set => _mateAnimal = value;
         }
         #endregion
     }

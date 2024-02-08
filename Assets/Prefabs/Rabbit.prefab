@@ -16,11 +16,12 @@ GameObject:
   - component: {fileID: 3990499280435124236}
   - component: {fileID: 726653593933121375}
   - component: {fileID: 4806527765874990635}
-  - component: {fileID: 4553056459746178254}
   - component: {fileID: 4105437327519139898}
   - component: {fileID: -3156159604700050615}
+  - component: {fileID: 4238192308527676579}
+  - component: {fileID: 4553056459746178254}
   m_Layer: 0
-  m_Name: Deer
+  m_Name: Rabbit
   m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,13 +194,60 @@ MonoBehaviour:
   _currentState: 4
   _idleSpeed: 3
   _fleeingSpeed: 8
-  _litterCount: 1
-  _hunger: 100
-  _thirst: 100
+  _hunger: 0
+  _thirst: 0
+  _reproductiveNeed: 48
   _healthPoints: 100
   _age: 10
   _sex: 0
+  _genotype: 2
+  _firstValue: 0
+  _secondValue: 0
   _ecosystemManager: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
+--- !u!114 &4105437327519139898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768194392575708253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67550a371d87577468bd95d0618c0b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentAnimal: {fileID: 4806527765874990635}
+  _mutationController: {fileID: -3156159604700050615}
+  _geneStructure: {fileID: 4238192308527676579}
+--- !u!114 &-3156159604700050615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768194392575708253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e03292de82191c428d5953bd8aa6d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mutationType: 3
+  _mutationChance: 40
+  _minValue: -5
+  _maxValue: 5
+--- !u!114 &4238192308527676579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768194392575708253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fdff88e7ba5c60448f3bdcede19c1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentAnimal: {fileID: 4806527765874990635}
 --- !u!114 &4553056459746178254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,36 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensoryRadiusObj: {fileID: 780956260992459277}
---- !u!114 &4105437327519139898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768194392575708253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67550a371d87577468bd95d0618c0b0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _reproductionTime: 90
-  _remainingTime: 5
-  _animalBehaviour: {fileID: 4806527765874990635}
-  _mutationController: {fileID: -3156159604700050615}
---- !u!114 &-3156159604700050615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3768194392575708253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e03292de82191c428d5953bd8aa6d5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mutationAmount: 2
-  _mutationChance: 40
 --- !u!1 &6811790727606090978
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,3 +332,4 @@ MonoBehaviour:
   _predatorsInRadius: 0
   _predators: []
   _preyController: {fileID: 4806527765874990635}
+  _reproductionSystem: {fileID: 4105437327519139898}

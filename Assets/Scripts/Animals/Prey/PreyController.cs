@@ -16,6 +16,12 @@ namespace Animals.Prey
 
 
         #region Unity Methods
+        protected override void Start()
+        {
+            base.Start();
+            GetComponent<SensoryReference>().SensoryRadiusObj.AnimalSearchRadius = Gene.FirstGeneValue;
+        }
+
         private void Update()
         {
             AnimalStateLogic();
@@ -28,6 +34,9 @@ namespace Animals.Prey
             // water
             ThirstLogic();
             DrinkLogic();
+
+            // reproduction
+            ReproductionNeed();
         }
         #endregion
 
@@ -35,8 +44,8 @@ namespace Animals.Prey
         #region API
         public void FoodWasSeen(GameObject food)
         {
-            if (Hunger < 50f && CurrentState != AnimalState.Fleeing && EcosystemManager.PreyFoodEdibility.ContainsKey(food) &&
-                EcosystemManager.PreyFoodEdibility[food].IsEdible && CurrentState != AnimalState.Eating)
+            if (Hunger > 50f && CurrentState != AnimalState.Fleeing && EcosystemManager.PreyFoodEdibility.ContainsKey(food) &&
+                EcosystemManager.PreyFoodEdibility[food].IsEdible && CurrentState != AnimalState.Eating && CurrentState != AnimalState.LookingForMate)
             {
                 CurrentState = AnimalState.RunningTowardsFood;
                 Agent.destination = food.gameObject.transform.position;
@@ -46,7 +55,7 @@ namespace Animals.Prey
 
         public void WaterWasSeen(GameObject water)
         {
-            if (Thirst < 50f && CurrentState != AnimalState.Fleeing && CurrentState != AnimalState.Drinking)
+            if (Thirst > 50f && CurrentState != AnimalState.Fleeing && CurrentState != AnimalState.Drinking && CurrentState != AnimalState.LookingForMate)
             {
                 CurrentState = AnimalState.RunningTowardsWater;
                 Agent.destination = water.gameObject.transform.position;
@@ -105,14 +114,14 @@ namespace Animals.Prey
         {
             if (Agent.velocity.magnitude > 0.2f)
             {
-                Hunger -= (0.05f * IdleSpeed) * Time.fixedDeltaTime;
+                Hunger += (0.05f * IdleSpeed) * Time.fixedDeltaTime;
             }
             else
             {
-                Hunger -= (0.05f * Time.fixedDeltaTime);
+                Hunger += (0.05f * Time.fixedDeltaTime);
             }
 
-            if (Hunger <= 0)
+            if (Hunger >= 100)
             {
                 RemoveAnimalFromManager();
                 Destroy(gameObject);
@@ -144,7 +153,7 @@ namespace Animals.Prey
             if (EcosystemManager.PreyFoodEdibility.ContainsKey(_preyFood) && 
                 EcosystemManager.PreyFoodEdibility[_preyFood].IsEdible)
             {
-                Hunger += 25;
+                Hunger -= 25;
                 EcosystemManager.PreyFoodEdibility[_preyFood].FoodIsEaten();
 
                 // for testing
@@ -182,10 +191,12 @@ namespace Animals.Prey
 
         private void DrinkWater()
         {
-            if (Thirst < 100)
+            if (Thirst > 0)
             {
                 CurrentState = AnimalState.Drinking;
-                Thirst += Time.fixedDeltaTime * 2f;
+                Thirst -= Time.fixedDeltaTime * 2f;
+
+                Thirst = Thirst < 0 ? 0 : Thirst;
             }
             else
             {

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 601189189025200413}
   - component: {fileID: 4090022299842126389}
   m_Layer: 0
-  m_Name: DeerFood
+  m_Name: RabbitFood
   m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

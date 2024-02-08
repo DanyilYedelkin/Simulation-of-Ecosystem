@@ -965,7 +965,7 @@ PrefabInstance:
       objectReference: {fileID: 1340943980}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _preyCount
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _predatorCount
@@ -973,7 +973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _preyFoodCount
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _totalPreyDeath

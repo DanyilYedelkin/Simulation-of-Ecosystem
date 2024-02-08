@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Animals;
 
 public class EcosystemManager : MonoBehaviour
 {
@@ -43,7 +44,6 @@ public class EcosystemManager : MonoBehaviour
 
 
     #region Private Members 
-    private Dictionary<GameObject, Animals.SearchRadius> _sensoryRadiusOfEntities;
     private Dictionary<GameObject, Food> _preyFoodEdibility;
     #endregion
 
@@ -52,7 +52,6 @@ public class EcosystemManager : MonoBehaviour
     private void Start()
     {
         _preyFoodEdibility = new();
-        _sensoryRadiusOfEntities = new();
         SpawnEntities();
         _totalPrey = _preyCount;
         _totalPredators = _predatorCount;
@@ -81,7 +80,6 @@ public class EcosystemManager : MonoBehaviour
         {
             GameObject instantiatedObject = Instantiate(_preyPrefab, 
                 new Vector3(Random.Range(0f, 10f), _preyPrefab.transform.position.y, Random.Range(0f, 10f)), Quaternion.identity, _preyParentObject.transform);
-            _sensoryRadiusOfEntities.Add(instantiatedObject, instantiatedObject.GetComponent<Animals.SensoryReference>().SensoryRadiusObj);
             _prey.Add(instantiatedObject);
             instantiatedObject.SetActive(true);
         }
@@ -108,11 +106,6 @@ public class EcosystemManager : MonoBehaviour
 
 
     #region Properties
-    public Dictionary<GameObject, Animals.SearchRadius> SensoryRadiusOfEntities
-    {
-        get => _sensoryRadiusOfEntities;
-        set => _sensoryRadiusOfEntities = value;
-    }
     public Dictionary<GameObject, Food> PreyFoodEdibility
     {
         get => _preyFoodEdibility;
