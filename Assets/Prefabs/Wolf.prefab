@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2164473034236918323}
   - component: {fileID: 7404015595811808215}
   - component: {fileID: 2751375317740326899}
+  - component: {fileID: 9123371422782264580}
   - component: {fileID: 8241894161180395912}
   m_Layer: 0
   m_Name: Wolf
@@ -34,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 1288950437178580844}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.56, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -135,7 +136,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _calculatingPath: 0
   _lowerBound: 10
-  _upperBound: 100
+  _upperBound: 20
   _movePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &7404015595811808215
 MonoBehaviour:
@@ -192,11 +193,15 @@ MonoBehaviour:
   _currentState: 4
   _idleSpeed: 6
   _fleeingSpeed: 10
-  _litterCount: 1
-  _hunger: 100
-  _thirst: 100
+  _hunger: 0
+  _thirst: 0
+  _reproductiveNeed: 0
   _healthPoints: 100
   _age: 6
+  _sex: 0
+  _genotype: 2
+  _firstValue: 10
+  _secondValue: 5
   _ecosystemManager: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
 --- !u!114 &2751375317740326899
 MonoBehaviour:
@@ -210,10 +215,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67550a371d87577468bd95d0618c0b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _reproductionTime: 100
-  _remainingTime: 5
-  _animalBehaviour: {fileID: 7404015595811808215}
+  _currentAnimal: {fileID: 7404015595811808215}
   _mutationController: {fileID: 8241894161180395912}
+  _geneStructure: {fileID: 9123371422782264580}
+--- !u!114 &9123371422782264580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288950437178580844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fdff88e7ba5c60448f3bdcede19c1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentAnimal: {fileID: 7404015595811808215}
 --- !u!114 &8241894161180395912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,8 +243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e03292de82191c428d5953bd8aa6d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mutationAmount: 2
-  _mutationChance: 15
+  _mutationType: 4
+  _mutationChance: 40
+  _minValue: -10
+  _maxValue: 10
 --- !u!1 &1985944108109973252
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,5 +314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _searchRadiusCollider: {fileID: 4165202489912373570}
-  _searchRadius: 20
+  _searchRadius: 5
+  _preyInRadius: 0
+  _prey: []
   _predatorController: {fileID: 7404015595811808215}
+  _reproductionSystem: {fileID: 2751375317740326899}

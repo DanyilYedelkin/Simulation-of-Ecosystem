@@ -96,7 +96,7 @@ namespace Animals
                     AnimalBehaviourController childController = child.GetComponent<AnimalBehaviourController>();
                     GeneStructure childGene = child.GetComponent<GeneStructure>();
                     MutationController childMutation = child.GetComponent<MutationController>();
-                    if (childController && childGene && childMutation)
+                    if (childController && childGene && childMutation && _ecosystemManager.GeneticEvolutionOfPrey)
                     {
                         childController.Gene = childGene.MendelianInheritance(mateAnimal.Gene, _currentAnimal.Gene);
                         childController.Gene = childMutation.TryMutateGene(childController.Gene);
@@ -112,12 +112,26 @@ namespace Animals
                 }
                 if (_currentAnimal.gameObject.tag.Equals("Predator"))
                 {
-                    /*GameObject child = Instantiate(_ecosystemManager.PredatorPrefab,
+                    GameObject child = Instantiate(_ecosystemManager.PredatorPrefab,
                         this.transform.position, Quaternion.identity, _ecosystemManager.PredatorparentObject.transform);
-                    _mutationController.AttemptSensoryMutation(child);
-                    _ecosystemManager.SensoryRadiusOfEntities.Add(child, child.GetComponent<SensoryReference>().SensoryRadiusObj);
+
+                    AnimalBehaviourController childController = child.GetComponent<AnimalBehaviourController>();
+                    GeneStructure childGene = child.GetComponent<GeneStructure>();
+                    MutationController childMutation = child.GetComponent<MutationController>();
+                    if (childController && childGene && childMutation && !_ecosystemManager.GeneticEvolutionOfPrey)
+                    {
+                        childController.Gene = childGene.MendelianInheritance(mateAnimal.Gene, _currentAnimal.Gene);
+                        childController.Gene = childMutation.TryMutateGene(childController.Gene);
+                        child.GetComponent<SensoryReference>().SensoryRadiusObj.AnimalSearchRadius = childController.Gene.FirstGeneValue;
+                        childController.FleeingSpeed = childController.Gene.FirstGeneValue;
+                    }
+                    else
+                    {
+                        Debug.Log("Error in child's components!");
+                    }
+
                     _currentAnimal.AddAnimalToManager(child);
-                    _ecosystemManager.TotalPredators++;*/
+                    _ecosystemManager.TotalPredators++;
                 }
             }
         }

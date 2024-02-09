@@ -196,7 +196,7 @@ MonoBehaviour:
   _fleeingSpeed: 8
   _hunger: 0
   _thirst: 0
-  _reproductiveNeed: 48
+  _reproductiveNeed: 0
   _healthPoints: 100
   _age: 10
   _sex: 0

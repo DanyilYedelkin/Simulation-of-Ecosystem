@@ -19,6 +19,7 @@ public class EcosystemManager : MonoBehaviour
 
     [Space]
     [Header("Configuration of animals and food")]
+    [SerializeField] private bool _geneticEvolutionOfPrey;
     [SerializeField] private int _preyFoodCount;
     [SerializeField] private int _preyCount;
     [SerializeField] private int _predatorCount;
@@ -146,10 +147,12 @@ public class EcosystemManager : MonoBehaviour
         get => _totalPredators;
         set => _totalPredators = value;
     }
-    public GameObject PreyPrefab           => _preyPrefab;
-    public GameObject PredatorPrefab       => _predatorPrefab;
-    public GameObject PreyParentObject     => _preyParentObject;
-    public GameObject PredatorparentObject => _predatorParentObject;
-    public GameObject Water                => _water;
+    public GameObject PreyPrefab             => _preyPrefab;
+    public GameObject PredatorPrefab         => _predatorPrefab;
+    public GameObject PreyParentObject       => _preyParentObject;
+    public GameObject PredatorparentObject   => _predatorParentObject;
+    public GameObject Water                  => _water;
+    public bool       GeneticEvolutionOfPrey => _geneticEvolutionOfPrey;
+    public int        SimulationSpeed        => _simulationSpeed;
     #endregion
 }

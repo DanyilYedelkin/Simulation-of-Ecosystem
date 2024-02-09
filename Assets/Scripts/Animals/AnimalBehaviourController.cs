@@ -95,11 +95,11 @@ namespace Animals
 
             if (Agent.velocity.magnitude > 0.2f)
             {
-                Thirst += (0.05f * IdleSpeed) * Time.fixedDeltaTime;
+                Thirst += (0.05f * IdleSpeed) * Time.fixedDeltaTime * EcosystemManager.SimulationSpeed;
             }
             else
             {
-                Thirst += (0.05f * Time.fixedDeltaTime);
+                Thirst += (0.05f * Time.fixedDeltaTime) * EcosystemManager.SimulationSpeed;
             }
 
             if (Thirst >= 100)
@@ -162,8 +162,12 @@ namespace Animals
         #region Properties
         public EcosystemManager EcosystemManager => _ecosystemManager;
         public float            IdleSpeed        => _idleSpeed;
-        public float            FleeingSpeed     => _fleeingSpeed;
         public bool             Sex              => _sex;
+        public float FleeingSpeed
+        {
+            get => _fleeingSpeed;
+            set => _fleeingSpeed = value;
+        }
         public AnimalState CurrentState
         {
             get => _currentState;

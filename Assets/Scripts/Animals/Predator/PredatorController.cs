@@ -8,41 +8,49 @@ namespace Animals.Predator
     {
         #region Private Members
         private GameObject _prey;
+        private GameObject _water;
+        private bool       _wantToDrink = false;
         #endregion
 
         #region Unity Methods
+        protected override void Start()
+        {
+            base.Start();
+            if (!EcosystemManager.GeneticEvolutionOfPrey)
+            {
+                FleeingSpeed = Gene.FirstGeneValue;
+            }
+        }
+
         private void Update()
         {
-            if (CurrentState == AnimalState.ChasingPrey && _prey != null)
-            {
-                Agent.destination = _prey.transform.position;
-                EatPrey(_prey);
-            }
-
-            if (CurrentState == AnimalState.ChasingPrey && !_prey)
-            {
-                CurrentState = AnimalState.Idle;
-            }
-
+            AnimalStateLogic();
             DeathIsInevitable();
-            if (Agent.velocity.magnitude > 0.2f)
-            {
-                Hunger -= (0.05f * IdleSpeed) * Time.fixedDeltaTime;
-            }
-            else
-            {
-                Hunger -= (0.05f * Time.fixedDeltaTime);
-            }
 
-            if (Hunger <= 0 || Thirst <= 0)
-            {
-                RemoveAnimalFromManager();
-                Destroy(gameObject);
-            }
+            // food 
+            HungerLogic();
+
+            // water
+            ThirstLogic();
+            DrinkLogic();
+
+            // reproduction
+            ReproductionNeed();
         }
         #endregion
 
         #region API
+        public void WaterWasSeen(GameObject water)
+        {
+            if (Thirst > 50f && CurrentState != AnimalState.ChasingPrey && CurrentState != AnimalState.Drinking && CurrentState != AnimalState.LookingForMate)
+            {
+                CurrentState = AnimalState.RunningTowardsWater;
+                Agent.destination = water.gameObject.transform.position;
+                _water = water;
+                _wantToDrink = true;
+            }
+        }
+
         public void PreyWasSeen(GameObject prey)
         {
             CurrentState = AnimalState.ChasingPrey;
@@ -68,6 +76,76 @@ namespace Animals.Predator
         #endregion
 
         #region Local Methods
+        private void AnimalStateLogic()
+        {
+            if (CurrentState == AnimalState.ChasingPrey && _prey != null)
+            {
+                Agent.destination = _prey.transform.position;
+                EatPrey(_prey);
+            }
+
+            if (CurrentState == AnimalState.ChasingPrey && !_prey)
+            {
+                CurrentState = AnimalState.Idle;
+            }
+        }
+
+        private void HungerLogic()
+        {
+            if (Agent.velocity.magnitude > 0.2f)
+            {
+                Hunger += (0.05f * IdleSpeed) * Time.fixedDeltaTime * EcosystemManager.SimulationSpeed;
+            }
+            else
+            {
+                Hunger += (0.05f * Time.fixedDeltaTime) * EcosystemManager.SimulationSpeed;
+            }
+
+            if (Hunger >= 100)
+            {
+                RemoveAnimalFromManager();
+                Destroy(gameObject);
+            }
+        }
+
+        private void DrinkLogic()
+        {
+            if (_water && _wantToDrink)
+            {
+                // Проверяем, находится ли объект на границе коллайдера воды
+                Collider waterCollider = _water.GetComponent<Collider>();
+                if (waterCollider != null)
+                {
+                    Vector3 checkPoint = transform.position + Vector3.down * 0.1f; // Можно настроить высоту проверки
+                    float radius = 0.5f; // Можно настроить радиус проверки
+
+                    if (Physics.CheckSphere(checkPoint, radius, LayerMask.GetMask("Water"))) // Предполагается, что вода имеет свой слой "Water"
+                    {
+                        // Объект находится на границе воды
+                        Debug.Log("Predator is near of water");
+                        Agent.destination = gameObject.transform.position;
+                        DrinkWater();
+                    }
+                }
+            }
+        }
+
+        private void DrinkWater()
+        {
+            if (Thirst > 0)
+            {
+                CurrentState = AnimalState.Drinking;
+                Thirst -= Time.fixedDeltaTime * 2f * EcosystemManager.SimulationSpeed;
+
+                Thirst = Thirst < 0 ? 0 : Thirst;
+            }
+            else
+            {
+                _wantToDrink = false;
+                CurrentState = AnimalState.Idle;
+            }
+        }
+
         private void EatPrey(GameObject prey)
         {
             if (Vector3.Distance(this.transform.position, prey.transform.position) < 2f)
@@ -83,12 +161,14 @@ namespace Animals.Predator
                 {
                     if (preyBehaviour.Age >= 1f && preyBehaviour.Age <= 15f)
                     {
-                        Hunger += 50;
+                        Hunger -= 50;
                     }
                     else
                     {
-                        Hunger += 25;
+                        Hunger -= 25;
                     }
+
+                    Hunger = Hunger < 0 ? 0 : Hunger;
                 }
                 else
                 {

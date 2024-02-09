@@ -19,7 +19,10 @@ namespace Animals.Prey
         protected override void Start()
         {
             base.Start();
-            GetComponent<SensoryReference>().SensoryRadiusObj.AnimalSearchRadius = Gene.FirstGeneValue;
+            if (EcosystemManager.GeneticEvolutionOfPrey)
+            {
+                GetComponent<SensoryReference>().SensoryRadiusObj.AnimalSearchRadius = Gene.FirstGeneValue;
+            }
         }
 
         private void Update()
@@ -114,11 +117,11 @@ namespace Animals.Prey
         {
             if (Agent.velocity.magnitude > 0.2f)
             {
-                Hunger += (0.05f * IdleSpeed) * Time.fixedDeltaTime;
+                Hunger += (0.05f * IdleSpeed) * Time.fixedDeltaTime * EcosystemManager.SimulationSpeed;
             }
             else
             {
-                Hunger += (0.05f * Time.fixedDeltaTime);
+                Hunger += (0.05f * Time.fixedDeltaTime) * EcosystemManager.SimulationSpeed;
             }
 
             if (Hunger >= 100)
@@ -194,7 +197,7 @@ namespace Animals.Prey
             if (Thirst > 0)
             {
                 CurrentState = AnimalState.Drinking;
-                Thirst -= Time.fixedDeltaTime * 2f;
+                Thirst -= Time.fixedDeltaTime * 2f * EcosystemManager.SimulationSpeed;
 
                 Thirst = Thirst < 0 ? 0 : Thirst;
             }
