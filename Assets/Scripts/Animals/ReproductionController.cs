@@ -48,9 +48,9 @@ namespace Animals
 
             AnimalBehaviourController mateAnimalController = mateAnimal.GetComponent<AnimalBehaviourController>();
 
-            if (_currentAnimal.ReproductiveNeed > 50 && _currentAnimal.Hunger < 50 &&
-                mateAnimalController && mateAnimalController.ReproductiveNeed > 50 &&
-                mateAnimalController.Hunger < 50 && mateAnimalController.CurrentState != AnimalState.LookingForMate &&
+            if (_currentAnimal.ReproductiveNeed > 30 && _currentAnimal.Hunger < 70 &&
+                mateAnimalController && mateAnimalController.ReproductiveNeed > 30 &&
+                mateAnimalController.Hunger < 70 && mateAnimalController.CurrentState != AnimalState.LookingForMate &&
                 mateAnimal != _currentAnimal.gameObject &&
                 _currentAnimal.Sex != mateAnimalController.Sex)
             {

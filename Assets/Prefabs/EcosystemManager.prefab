@@ -78,19 +78,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883f59ec738d507439156adef4d0b8dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _preyFoodPrefab: {fileID: 5539365611512766279, guid: e1578d29c8009c444af39b9be81bea3d, type: 3}
-  _preyPrefab: {fileID: 3768194392575708253, guid: 0425e09d7705c7741a53844903413835, type: 3}
-  _predatorPrefab: {fileID: 1288950437178580844, guid: 49b10bcea4dd91c4aaec29d4ae5565aa, type: 3}
+  _preyFoodPrefab:
+  - {fileID: 7482314918865829726, guid: 24e34c80cd2557047be4d9516b07a61a, type: 3}
+  - {fileID: 7561775732055206772, guid: 06eddbb62f31b874d8590898e4789c72, type: 3}
+  - {fileID: 1678365754931051044, guid: 59a15047b2726f941934f0bf404a4644, type: 3}
+  - {fileID: 5550730088625033898, guid: 8027998eda1c2204ab46143c11d82cef, type: 3}
+  - {fileID: 3293321308547548600, guid: ba2cf52d296baa3448747edc0d308e32, type: 3}
+  _preyPrefab: {fileID: 8718339851488261989, guid: 82494bfff104edd43883af91f878c094, type: 3}
+  _predatorPrefab: {fileID: 5762446168071747311, guid: 125be65f017b4c843a37dbf6fd522b1f, type: 3}
   _preyFoods: []
   _prey: []
   _predators: []
-  _preyFoodCount: 4
+  _geneticEvolutionOfPrey: 0
+  _preyFoodCount: 0
   _preyCount: 3
   _predatorCount: 2
   _totalPrey: 0
   _totalPredators: 0
-  _totalPreyDeath: 251
-  _totalPredatorDeath: 90
+  _totalPreyDeath: 0
+  _totalPredatorDeath: 0
   _simulationSpeed: 1
   _preyParentObject: {fileID: 8972030040132359842}
   _predatorParentObject: {fileID: 2836659193329047758}
@@ -108,19 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efe0adc81daccfb499f914d77a3f9657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isPrey: 0
-  SpeedMutationType: 4
-  SpeedMutationProbability: 0
-  SpeedMutationValueMin: 0
-  SpeedMutationValueMax: 0
-  DominantSpeed: 0
-  RecessiveSpeed: 0
-  MetabolismMutationType: 4
-  MetabolismMutationProbability: 0
-  MetabolismMutationValueMin: 0
-  MetabolismMutationValueMax: 0
-  DominantMetabloism: 0
-  RecessiveMetabloism: 0
 --- !u!1 &8972030040132359842
 GameObject:
   m_ObjectHideFlags: 0

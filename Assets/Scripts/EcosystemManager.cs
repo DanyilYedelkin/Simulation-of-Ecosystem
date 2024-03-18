@@ -7,9 +7,9 @@ public class EcosystemManager : MonoBehaviour
 {
     #region Configuration
     [Header("Prefabs of animals and food")]
-    [SerializeField] private GameObject _preyFoodPrefab;
-    [SerializeField] private GameObject _preyPrefab;
-    [SerializeField] private GameObject _predatorPrefab;
+    [SerializeField] private GameObject[] _preyFoodPrefab;
+    [SerializeField] private GameObject   _preyPrefab;
+    [SerializeField] private GameObject   _predatorPrefab;
 
     [Space]
     [Header("List of animals and food")]
@@ -26,14 +26,17 @@ public class EcosystemManager : MonoBehaviour
 
     [Space]
     [Header("Results of Simulation")]
+    [SerializeField] private int _totalPreyFood;
     [SerializeField] private int _totalPrey;
     [SerializeField] private int _totalPredators;
+    [SerializeField] private int _totalPreyFoodEaten;
     [SerializeField] private int _totalPreyDeath;
     [SerializeField] private int _totalPredatorDeath;
 
     [Space]
     [Header("Another Settings")]
     [SerializeField] private int _simulationSpeed;
+    [SerializeField] private int _foodSpawnDelay;
 
     [Space]
     [Header("GameObjects that hold predator and prey instances")]
@@ -46,6 +49,7 @@ public class EcosystemManager : MonoBehaviour
 
     #region Private Members 
     private Dictionary<GameObject, Food> _preyFoodEdibility;
+    private float _nextFoodSpawn = 0f;
     #endregion
 
 
@@ -56,11 +60,20 @@ public class EcosystemManager : MonoBehaviour
         SpawnEntities();
         _totalPrey = _preyCount;
         _totalPredators = _predatorCount;
+        _totalPreyFood = _preyFoodCount;
+        _nextFoodSpawn = _foodSpawnDelay;
     }
 
     private void Update()
     {
         Time.timeScale = _simulationSpeed;
+
+        if (Time.time > _nextFoodSpawn)
+        {
+            _nextFoodSpawn = (Time.time + _foodSpawnDelay);
+            SpawnFoodBatch(1, _preyFoodPrefab, _ground.transform, _preyFoodEdibility);
+            _totalPreyFood++;
+        }
     }
     #endregion
 
@@ -68,39 +81,46 @@ public class EcosystemManager : MonoBehaviour
     #region Local Methods
     private void SpawnEntities()
     {
-        //Spawns predator and prey on opposite sides of the watering hole.
-        for (int i = 0; i < _predatorCount; i++)
+        //Spawns predator, prey and food on opposite sides of the watering hole.
+        SpawnEntityBatch(_predatorCount, _predatorPrefab, _predatorParentObject.transform, _predators);
+        SpawnEntityBatch(_preyCount, _preyPrefab, _preyParentObject.transform, _prey);
+        SpawnFoodBatch(_preyFoodCount, _preyFoodPrefab, _ground.transform, _preyFoodEdibility);
+    }
+
+    private void SpawnEntityBatch(int count, GameObject prefab, Transform parent, List<GameObject> list)
+    {
+        for (int i = 0; i < count; i++)
         {
-            GameObject instantiatedObject = Instantiate(_predatorPrefab, 
-                new Vector3(Random.Range(0f, 10f), _predatorPrefab.transform.position.y, Random.Range(0f, 10f)), Quaternion.identity, _predatorParentObject.transform);
-            _predators.Add(instantiatedObject);
+            Vector3 spawnPoint = GetSpawnPointOnGround();
+            GameObject instantiatedObject = Instantiate(prefab, spawnPoint, Quaternion.identity, parent);
+            list.Add(instantiatedObject);
             instantiatedObject.SetActive(true);
         }
+    }
 
-        for (int i = 0; i < _preyCount; i++)
+    private void SpawnFoodBatch(int count, GameObject[] prefab, Transform parent, Dictionary<GameObject, Food> dict)
+    {
+        for (int i = 0; i < count; i++)
         {
-            GameObject instantiatedObject = Instantiate(_preyPrefab, 
-                new Vector3(Random.Range(0f, 10f), _preyPrefab.transform.position.y, Random.Range(0f, 10f)), Quaternion.identity, _preyParentObject.transform);
-            _prey.Add(instantiatedObject);
-            instantiatedObject.SetActive(true);
-        }
-
-        for (int i = 0; i < _preyFoodCount; i++)
-        {
-            GameObject instantiatedPlant;
-            if (i % 2 == 0)
-            {
-                instantiatedPlant = Instantiate(_preyFoodPrefab, 
-                    new Vector3(Random.Range(0f, 10f), _preyFoodPrefab.transform.position.y, Random.Range(0f, 10f)), Quaternion.identity, _ground.transform);
-                _preyFoodEdibility.Add(instantiatedPlant, instantiatedPlant.GetComponent<Food>());
-            }
-            else
-            {
-                instantiatedPlant = Instantiate(_preyFoodPrefab, 
-                    new Vector3(Random.Range(0f, 10f), _preyFoodPrefab.transform.position.y, Random.Range(0f, 10f)), Quaternion.identity, _ground.transform);
-                _preyFoodEdibility.Add(instantiatedPlant, instantiatedPlant.GetComponent<Food>());
-            }
+            Vector3 spawnPoint = GetSpawnPointOnGround();
+            GameObject instantiatedPlant = Instantiate(prefab[Random.Range(0, prefab.Length)], spawnPoint, Quaternion.identity, parent);
+            dict.Add(instantiatedPlant, instantiatedPlant.GetComponent<Food>());
             instantiatedPlant.SetActive(true);
+        }
+    }
+
+    private Vector3 GetSpawnPointOnGround()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(new Vector3(Random.Range(-100f, 100f), 100f, Random.Range(-100f, 100f)), Vector3.down, out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
+        {
+            return hit.point;
+        }
+        else
+        {
+            Debug.LogWarning("Failed to find ground surface for spawn point. Try to restart the spawn.");
+            return GetSpawnPointOnGround();
+            //return Vector3.zero;
         }
     }
     #endregion
@@ -146,6 +166,16 @@ public class EcosystemManager : MonoBehaviour
     {
         get => _totalPredators;
         set => _totalPredators = value;
+    }
+    public int TotalPreyFood
+    {
+        get => _totalPreyFood;
+        set => _totalPreyFood = value;
+    }
+    public int TotalPreyFoodEaten
+    {
+        get => _totalPreyFoodEaten;
+        set => _totalPreyFoodEaten = value;
     }
     public GameObject PreyPrefab             => _preyPrefab;
     public GameObject PredatorPrefab         => _predatorPrefab;

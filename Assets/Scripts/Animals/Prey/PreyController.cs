@@ -162,6 +162,7 @@ namespace Animals.Prey
                 // for testing
                 EcosystemManager.PreyFoodEdibility.Remove(_preyFood);
                 Destroy(_preyFood.gameObject);
+                EcosystemManager.TotalPreyFoodEaten++;
 
                 _preyFood = null;
                 CurrentState = AnimalState.Idle;

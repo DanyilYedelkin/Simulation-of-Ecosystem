@@ -113,11 +113,11 @@ namespace Animals
         {
             if (Agent.velocity.magnitude > 0.2f)
             {
-                ReproductiveNeed += (0.05f * IdleSpeed) * Time.fixedDeltaTime;
+                ReproductiveNeed += (0.05f * IdleSpeed) * Time.fixedDeltaTime * EcosystemManager.SimulationSpeed;
             }
             else
             {
-                ReproductiveNeed += (0.05f * Time.fixedDeltaTime);
+                ReproductiveNeed += (0.05f * Time.fixedDeltaTime) * EcosystemManager.SimulationSpeed;
             }
         }
         #endregion
