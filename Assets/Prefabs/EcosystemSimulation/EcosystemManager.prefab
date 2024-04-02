@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2836659193329047758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6155275425597414903}
+  m_Layer: 0
+  m_Name: Predators
+  m_TagString: Predator
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6155275425597414903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836659193329047758}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5940727739181083289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8670459492669818811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5940727739181083289}
+  - component: {fileID: 3189638356800522051}
+  - component: {fileID: 1412963825450544031}
+  m_Layer: 0
+  m_Name: EcosystemManager
+  m_TagString: EcosystemManager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5940727739181083289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670459492669818811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15, y: 5, z: 15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1346874452785522279}
+  - {fileID: 6155275425597414903}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3189638356800522051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670459492669818811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883f59ec738d507439156adef4d0b8dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preyFoodPrefab:
+  - {fileID: 7482314918865829726, guid: 24e34c80cd2557047be4d9516b07a61a, type: 3}
+  - {fileID: 7561775732055206772, guid: 06eddbb62f31b874d8590898e4789c72, type: 3}
+  - {fileID: 1678365754931051044, guid: 59a15047b2726f941934f0bf404a4644, type: 3}
+  - {fileID: 5550730088625033898, guid: 8027998eda1c2204ab46143c11d82cef, type: 3}
+  - {fileID: 3293321308547548600, guid: ba2cf52d296baa3448747edc0d308e32, type: 3}
+  _preyPrefab: {fileID: 8718339851488261989, guid: 82494bfff104edd43883af91f878c094, type: 3}
+  _predatorPrefab: {fileID: 5762446168071747311, guid: 125be65f017b4c843a37dbf6fd522b1f, type: 3}
+  _preyFoods: []
+  _prey: []
+  _predators: []
+  _geneticEvolutionOfPrey: 0
+  _geneticEvolutionOfPredators: 0
+  _secondsPerAge: 300
+  _preyFoodCount: 0
+  _preyCount: 3
+  _predatorCount: 2
+  _simulationRuntime: 0
+  _totalPreyFood: 0
+  _totalPrey: 0
+  _totalPredators: 0
+  _totalPreyFoodEaten: 0
+  _totalPreyDeath: 0
+  _totalPredatorDeath: 0
+  _simulationSpeed: 1
+  _foodSpawnDelay: 0
+  _navMeshSurface: {fileID: 0}
+  _preyParentObject: {fileID: 8972030040132359842}
+  _predatorParentObject: {fileID: 2836659193329047758}
+  _ground: {fileID: 0}
+  _water: {fileID: 0}
+--- !u!114 &1412963825450544031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8670459492669818811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe0adc81daccfb499f914d77a3f9657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8972030040132359842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346874452785522279}
+  m_Layer: 0
+  m_Name: Prey
+  m_TagString: Prey
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1346874452785522279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972030040132359842}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5940727739181083289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
