@@ -29,6 +29,9 @@ namespace Animals
         [SerializeField] private bool     _sex              = false;
         [SerializeField] private Gene     _gene;
 
+        [Space]
+        [SerializeField] private SearchRadius _searchRadius;
+
         [Header("Age Configuration")]
         [SerializeField] private AgeController _ageController;
 
@@ -142,9 +145,9 @@ namespace Animals
                 _gene.GeneType = Genotype.Ab;
                 _gene.FirstGeneValue = random.Next(10, 21);
                 _gene.SecondGeneValue = random.Next(5, 13);
-                _gene.ParentType = _sex ? ParentType.Father : ParentType.Mother;
             }
 
+            _gene.ParentType = _sex ? ParentType.Father : ParentType.Mother;
             _firstValue = _gene.FirstGeneValue;
             _secondValue = _gene.SecondGeneValue;
             _genotype = _gene.GeneType;
@@ -167,7 +170,8 @@ namespace Animals
         #region Properties
         public EcosystemManager EcosystemManager => _ecosystemManager;
         public AgeController AgeController => _ageController;
-        public bool             Sex              => _sex;
+        public bool Sex => _sex;
+        public SearchRadius SearchRadius => _searchRadius;
         public float IdleSpeed
         {
             get => _idleSpeed;

@@ -23,7 +23,7 @@ public class EcosystemManager : MonoBehaviour
     [Header("Configuration of animals and food")]
     [SerializeField] private bool  _geneticEvolutionOfPrey;
     [SerializeField] private bool  _geneticEvolutionOfPredators;
-    [SerializeField] private float _secondsPerAge;
+    [SerializeField] private float _secondsPerYear;
     [SerializeField] private int   _preyFoodCount;
     [SerializeField] private int   _preyCount;
     [SerializeField] private int   _predatorCount;
@@ -62,6 +62,13 @@ public class EcosystemManager : MonoBehaviour
     #region Unity Methods
     private void Start()
     {
+        if (StateSettingsController.MainMenuStart)
+        {
+            PreyConfiguration();
+            PredatorConfiguration();
+            GeneralConfiguration();
+        }
+
         _preyFoodEdibility = new();
         SpawnEntities();
         _totalPrey = _preyCount;
@@ -72,7 +79,7 @@ public class EcosystemManager : MonoBehaviour
 
     private void Update()
     {
-        _simulationRuntime += Time.fixedDeltaTime * _simulationSpeed / _secondsPerAge;
+        _simulationRuntime += Time.fixedDeltaTime * _simulationSpeed / _secondsPerYear;
 
         Time.timeScale = _simulationSpeed;
 
@@ -87,6 +94,124 @@ public class EcosystemManager : MonoBehaviour
 
 
     #region Local Methods
+    private AgeState FindAgeState(string strAgeState)
+    {
+        switch (strAgeState.ToLower())
+        {
+            case "newborn":
+                return AgeState.Newborn;
+            case "infant":
+                return AgeState.Infant;
+            case "adolescent":
+                return AgeState.Adolescent;
+            case "young":
+                return AgeState.Young;
+            case "adult":
+                return AgeState.Adult;
+            case "old":
+                return AgeState.Old;
+            default:
+                // error
+                return AgeState.Adolescent;
+        }
+    }
+
+    private void PreyConfiguration()
+    {
+        _geneticEvolutionOfPrey = StateSettingsController.PreyConfiguration.GeneticEvolution;
+        _preyCount = StateSettingsController.PreyConfiguration.Count;
+
+        if (_preyCount > 0)
+        {
+            AnimalBehaviourController preyController = _preyPrefab.GetComponent<AnimalBehaviourController>();
+            if (preyController)
+            {
+                preyController.IdleSpeed = StateSettingsController.PreyConfiguration.IdleSpeed;
+                preyController.FleeingSpeed = StateSettingsController.PreyConfiguration.FleeingSpeed;
+
+                if (preyController.Gene == null)
+                {
+                    preyController.Gene = new();
+                }
+                preyController.Gene.GeneType = Genotype.Ab;
+                preyController.Gene.FirstGeneValue = StateSettingsController.PreyConfiguration.FirstValue;
+                preyController.Gene.SecondGeneValue = StateSettingsController.PreyConfiguration.SecondValue;
+                preyController.SearchRadius.AnimalSearchRadius = StateSettingsController.PreyConfiguration.ViewDistance;
+            }
+
+            ReproductionController reproduction = _preyPrefab.GetComponent<ReproductionController>();
+            if (reproduction)
+            {
+                reproduction.InheritanceCount = StateSettingsController.PreyConfiguration.InheritanceCount;
+            }
+
+            AgeController age = _preyPrefab.GetComponent<AgeController>();
+            if (age)
+            {
+                age.CurrentAge = StateSettingsController.PreyConfiguration.CurrentAge;
+                age.CurrentAgeState = FindAgeState(StateSettingsController.PreyConfiguration.CurrentAgeState);
+                age.MaxAge = StateSettingsController.PreyConfiguration.MaxAge;
+                age.InfantAge = StateSettingsController.PreyConfiguration.InfantAge;
+                age.AdolescentAge = StateSettingsController.PreyConfiguration.AdolescentAge;
+                age.YoungAge = StateSettingsController.PreyConfiguration.YoungAge;
+                age.AdultAge = StateSettingsController.PreyConfiguration.AdultAge;
+                age.OldAge = StateSettingsController.PreyConfiguration.OldAge;
+            }
+        }
+    }
+
+    private void PredatorConfiguration()
+    {
+        _geneticEvolutionOfPredators = StateSettingsController.PredatorConfiguration.GeneticEvolution;
+        _predatorCount = StateSettingsController.PredatorConfiguration.Count;
+
+        if (_predatorCount > 0)
+        {
+            AnimalBehaviourController predatorController = _predatorPrefab.GetComponent<AnimalBehaviourController>();
+            if (predatorController)
+            {
+                predatorController.IdleSpeed = StateSettingsController.PredatorConfiguration.IdleSpeed;
+                predatorController.FleeingSpeed = StateSettingsController.PredatorConfiguration.FleeingSpeed;
+
+                if (predatorController.Gene == null)
+                {
+                    predatorController.Gene = new();
+                }
+                predatorController.Gene.GeneType = Genotype.Ab;
+                predatorController.Gene.FirstGeneValue = StateSettingsController.PredatorConfiguration.FirstValue;
+                predatorController.Gene.SecondGeneValue = StateSettingsController.PredatorConfiguration.SecondValue;
+                predatorController.SearchRadius.AnimalSearchRadius = StateSettingsController.PredatorConfiguration.ViewDistance;
+            }
+
+            ReproductionController reproduction = _predatorPrefab.GetComponent<ReproductionController>();
+            if (reproduction)
+            {
+                reproduction.InheritanceCount = StateSettingsController.PredatorConfiguration.InheritanceCount;
+            }
+
+            AgeController age = _predatorPrefab.GetComponent<AgeController>();
+            if (age)
+            {
+                age.CurrentAge = StateSettingsController.PredatorConfiguration.CurrentAge;
+                age.CurrentAgeState = FindAgeState(StateSettingsController.PredatorConfiguration.CurrentAgeState);
+                age.MaxAge = StateSettingsController.PredatorConfiguration.MaxAge;
+                age.InfantAge = StateSettingsController.PredatorConfiguration.InfantAge;
+                age.AdolescentAge = StateSettingsController.PredatorConfiguration.AdolescentAge;
+                age.YoungAge = StateSettingsController.PredatorConfiguration.YoungAge;
+                age.AdultAge = StateSettingsController.PredatorConfiguration.AdultAge;
+                age.OldAge = StateSettingsController.PredatorConfiguration.OldAge;
+            }
+        }
+    }
+
+    private void GeneralConfiguration()
+    {
+        _preyFoodCount = StateSettingsController.GeneralConfiguration.PreyFoodCount;
+        _foodSpawnDelay = StateSettingsController.GeneralConfiguration.PreyFoodSpawnDelay;
+        _simulationSpeed = StateSettingsController.GeneralConfiguration.SimulationSpeed;
+        _secondsPerYear = StateSettingsController.GeneralConfiguration.SecondsPerYear;
+    }
+
     private void SpawnEntities()
     {
         //Spawns predator, prey and food on opposite sides of the watering hole.
@@ -193,6 +318,6 @@ public class EcosystemManager : MonoBehaviour
     public bool       GeneticEvolutionOfPrey      => _geneticEvolutionOfPrey;
     public bool       GeneticEvolutionOfPredators => _geneticEvolutionOfPredators;
     public int        SimulationSpeed             => _simulationSpeed;
-    public float      SecondsPerAge               => _secondsPerAge;
+    public float      SecondsPerAge               => _secondsPerYear;
     #endregion
 }

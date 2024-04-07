@@ -1165,6 +1165,7 @@ MonoBehaviour:
   _reproductiveNeed: 0
   _healthPoints: 100
   _sex: 0
+  _searchRadius: {fileID: 5446271779252394872}
   _ageController: {fileID: 1294655491203239773}
   _genotype: 2
   _firstValue: 5

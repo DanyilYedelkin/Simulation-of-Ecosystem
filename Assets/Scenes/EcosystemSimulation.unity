@@ -8237,7 +8237,7 @@ PrefabInstance:
       objectReference: {fileID: 1411275052}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _preyCount
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _preyPrefab
@@ -8253,7 +8253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _preyFoodCount
-      value: 3
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _secondsPerAge
@@ -8261,12 +8261,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _foodSpawnDelay
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _navMeshSurface
       value: 
       objectReference: {fileID: 1476160344}
+    - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
+      propertyPath: _secondsPerYear
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 3189638356800522051, guid: a0446f8c70d1dcd468c96d7c68d0df2b, type: 3}
       propertyPath: _totalPreyDeath
       value: 0

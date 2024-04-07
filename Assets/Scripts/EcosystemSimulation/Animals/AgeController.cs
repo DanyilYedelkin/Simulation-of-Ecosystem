@@ -134,11 +134,45 @@ namespace Animals
         #endregion
 
         #region Properties
-        public AgeState CurrentAgeState => _currentAgeState;
+        public AgeState CurrentAgeState
+        {
+            get => _currentAgeState;
+            set => _currentAgeState = value;
+        }
         public float CurrentAge
         {
             get => _currentAge;
             set => _currentAge = value;
+        }
+        public float MaxAge
+        {
+            get => _maxAge;
+            set => _maxAge = value;
+        }
+        public float InfantAge
+        {
+            get => _infantAge;
+            set => _infantAge = value;
+        }
+        public float AdolescentAge
+        {
+            get => _adolescentAge;
+            set => _adolescentAge = value;
+        }
+        public float YoungAge
+        {
+            get => _youngAge;
+            set => _youngAge = value;
+        }
+        public float AdultAge
+        {
+            get => _adultAge;
+            set => _adultAge = value;
+        }
+        public float OldAge
+        {
+            get => _oldAge;
+            set => _oldAge = value;
         }
         #endregion
     }

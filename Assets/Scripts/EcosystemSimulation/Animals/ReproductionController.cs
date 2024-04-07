@@ -141,5 +141,13 @@ namespace Animals
             }
         }
         #endregion
+
+        #region Properties
+        public int InheritanceCount
+        {
+            get => _inheritanceCount;
+            set => _inheritanceCount = value;
+        }
+        #endregion
     }
 }
